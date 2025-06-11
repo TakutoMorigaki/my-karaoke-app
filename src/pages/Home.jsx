@@ -14,6 +14,7 @@ function Home() {
         <>
         <h1>ホームページﾃﾞｽ</h1>
         <p>ようこそ{username}さん！</p>
+        <button onClick={() => navigate('/add')}>曲の登録画面へ</button>
         <button onClick={handleLogout} className="Logoutbtn">ログアウト</button>
         </>
     )
