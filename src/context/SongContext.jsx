@@ -5,12 +5,12 @@ const songContext = createContext(null);
 export function Songprovider({children}) {
     const [songs, setSongs] = useState([]);
 
-    const addSong = (songTitle, songArtist, songCategory) => {
+    const addSong = (title, artist, category) => {
         
         const newSong = {
-        title: songTitle.trim(),
-        artist: songArtist.trim(),
-        songCategory
+        title: title.trim(),
+        artist: artist.trim(),
+        category
         };
 
         setSongs(prevSongs => [...prevSongs, newSong]);

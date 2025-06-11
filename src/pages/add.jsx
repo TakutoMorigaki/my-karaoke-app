@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSong } from "../context/SongContext";
+import { Link } from "react-router-dom";
 
 function Add() {
    const [inputtitle, setInputtitle] = useState('');
@@ -22,6 +23,7 @@ function Add() {
    
    return(
         <>
+        <Link to="/home">ホームページに戻る</Link>
         <h1>曲の登録</h1>
         <input 
             type="text"

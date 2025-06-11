@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Add from './pages/add';
+import List from './pages/list';
 
 function App() {
   
@@ -13,6 +14,7 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='*' element={<NotFound />} />
           <Route path='/add' element={<Add />} />
+          <Route path='/list' element={<List />} />
         </Routes>
     </>
   )
