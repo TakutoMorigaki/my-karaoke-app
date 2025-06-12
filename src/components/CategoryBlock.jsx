@@ -1,4 +1,7 @@
+import { useSong } from "../context/SongContext";
+
 function CategoryBlock({title, songs}) {
+    const {deleteSong} = useSong();
     return(
         <>
         <h2>{title}</h2>
@@ -6,9 +9,14 @@ function CategoryBlock({title, songs}) {
             <p>曲が未登録です</p>
         ) : (
             <ul>
-                {songs.map((song, index) => (
+                {[...songs]
+                  .sort((a, b) => a.priority - b.priority)
+                  .map((song, index) => (
                     <li key={index}>
-                        ｢{song.title}｣ by {song.artist}
+                        {song.priority}. ｢{song.title}｣ by {song.artist}
+                        <button 
+                            onClick={() => deleteSong(song.title, song.artist)}
+                        >❌️</button>
                     </li>
                 ))}
             </ul>

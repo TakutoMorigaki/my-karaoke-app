@@ -1,29 +1,44 @@
 import { useContext, createContext, useState } from "react";
 
-const songContext = createContext(null);
+const SongContext = createContext(null);
 
 export function Songprovider({children}) {
     const [songs, setSongs] = useState([]);
 
-    const addSong = (title, artist, category) => {
+    const isDuplicateSong = (title, artist) => {
+        return songs.find(song =>
+            song.title === title && song.artist === artist
+        ) !== undefined;
+    }
+    
+    const addSong = (songtitle, songartist, songcategory, songpriority) => {
         
         const newSong = {
-        title: title.trim(),
-        artist: artist.trim(),
-        category
+        title: songtitle.trim(),
+        artist: songartist.trim(),
+        category: songcategory,
+        priority: Number(songpriority)
         };
 
         setSongs(prevSongs => [...prevSongs, newSong]);
     };
-    
+
+    const deleteSong = (title, artist) => {
+        setSongs(prevSongs =>
+            prevSongs.filter(song =>
+                !(song.title === title && song.artist === artist)
+            )
+        );
+    };
+
 
     return(
-        <songContext.Provider value={{ songs, addSong}}>
+        <SongContext.Provider value={{ songs, addSong, isDuplicateSong, deleteSong}}>
             {children}
-        </songContext.Provider>
+        </SongContext.Provider>
     )
 }
 
 export function useSong() {
-    return useContext(songContext);
+    return useContext(SongContext);
 }

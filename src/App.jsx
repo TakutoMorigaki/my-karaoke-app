@@ -2,8 +2,8 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import Add from './pages/add';
-import List from './pages/list';
+import Add from './pages/Add';
+import List from './pages/List';
 
 function App() {
   

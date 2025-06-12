@@ -6,19 +6,32 @@ function Add() {
    const [inputtitle, setInputtitle] = useState('');
    const [inputartist, setInputartist] = useState('');
    const [inputcategory, setInputcategory] = useState('これから覚えたい');
+   const [inputpriority, setInputpriority] = useState(null);
    const {addSong} = useSong();
-   
+   const {isDuplicateSong} = useSong();
 
    const handleAddSong = () => {
+        if(inputpriority === null){
+            alert('優先度の選択をお願いします')
+            return;
+        }
         if(inputtitle.trim() === '' || inputartist.trim() === ''){
             alert('アーティスト名と、曲名は必ず入力してください')
             return;
         }
-        addSong(inputtitle, inputartist, inputcategory)
 
+        if(isDuplicateSong(inputtitle, inputartist)){
+            alert('同じ曲は追加できません');
+            alert('優先度の変更、カテゴリの変更は曲一覧ページからお願いします');
+            return;
+        }
+        
+        addSong(inputtitle, inputartist, inputcategory, inputpriority);
+        
         setInputtitle('');
         setInputartist('');
         setInputcategory('これから覚えたい');
+        setInputpriority(null);
    }
    
    return(
@@ -37,6 +50,13 @@ function Add() {
                 value={inputartist}
                 onChange={(e) => setInputartist(e.target.value)}
                 /><br />
+            <input
+                type="number"
+                placeholder="優先度(1が最高、数が大きほど低)"
+                value={inputpriority}
+                onChange={(e) => setInputpriority(Number(e.target.value))}
+                min="1"
+            /><br />
             <select
                 value={inputcategory}
                 onChange={(e) => setInputcategory(e.target.value)}
