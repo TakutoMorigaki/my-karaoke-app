@@ -6,12 +6,13 @@ function Add() {
    const [inputtitle, setInputtitle] = useState('');
    const [inputartist, setInputartist] = useState('');
    const [inputcategory, setInputcategory] = useState('これから覚えたい');
-   const [inputpriority, setInputpriority] = useState(null);
+   const [inputpriority, setInputpriority] = useState('');
+   const [inputurl, setInputUrl] = useState('');
    const {addSong} = useSong();
    const {isDuplicateSong} = useSong();
 
    const handleAddSong = () => {
-        if(inputpriority === null){
+        if(inputpriority === ''){
             alert('優先度の選択をお願いします')
             return;
         }
@@ -26,12 +27,13 @@ function Add() {
             return;
         }
         
-        addSong(inputtitle, inputartist, inputcategory, inputpriority);
+        addSong(inputtitle, inputartist, inputcategory, inputpriority, inputurl);
         
         setInputtitle('');
         setInputartist('');
         setInputcategory('これから覚えたい');
-        setInputpriority(null);
+        setInputpriority('');
+        setInputUrl('');
    }
    
    return(
@@ -61,10 +63,16 @@ function Add() {
                 value={inputcategory}
                 onChange={(e) => setInputcategory(e.target.value)}
             >
-                <option value="歌いたい">歌いたい</option>
                 <option value="よく歌う">よく歌う</option>
+                <option value="気になっている">気になっている</option>
                 <option value="これから覚えたい">これから覚えたい</option>
             </select><br />
+            <input 
+                type="url"
+                placeholder="歌詞のあるwebサイトのURL(任意)"
+                value={inputurl}
+                onChange={(e) => setInputUrl(e.target.value)}
+            /><br />
             <button onClick={handleAddSong} className="addbtn">曲を登録</button>
         </>
     )

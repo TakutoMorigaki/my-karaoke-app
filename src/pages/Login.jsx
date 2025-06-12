@@ -6,6 +6,7 @@ function Login() {
     const [inputname, setInputname] = useState('');
     const [inputpass, setInputpass] = useState('');
     const {login} = useAuth();
+    const {isAuthenticated} = useAuth();
     const navigate = useNavigate();
 
     const handleLogin = () => {
@@ -18,6 +19,7 @@ function Login() {
             return;
         }
         login(inputname, inputpass);
+        console.log(isAuthenticated);
         navigate('/home');
     }
 

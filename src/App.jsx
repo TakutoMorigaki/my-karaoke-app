@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Add from './pages/Add';
 import List from './pages/List';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   
@@ -11,10 +12,12 @@ function App() {
     <>
         <Routes>
           <Route path='/' element={<Login />} />
-          <Route path='/home' element={<Home />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path='/home' element={<Home />} />
+            <Route path='/add' element={<Add />} />
+            <Route path='/list' element={<List />} />
+          </Route>
           <Route path='*' element={<NotFound />} />
-          <Route path='/add' element={<Add />} />
-          <Route path='/list' element={<List />} />
         </Routes>
     </>
   )

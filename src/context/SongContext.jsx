@@ -11,13 +11,14 @@ export function Songprovider({children}) {
         ) !== undefined;
     }
     
-    const addSong = (songtitle, songartist, songcategory, songpriority) => {
+    const addSong = (songtitle, songartist, songcategory, songpriority, songurl) => {
         
         const newSong = {
         title: songtitle.trim(),
         artist: songartist.trim(),
         category: songcategory,
-        priority: Number(songpriority)
+        priority: Number(songpriority),
+        url: songurl.trim()
         };
 
         setSongs(prevSongs => [...prevSongs, newSong]);

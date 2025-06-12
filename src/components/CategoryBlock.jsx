@@ -16,7 +16,8 @@ function CategoryBlock({title, songs}) {
                         {song.priority}. ｢{song.title}｣ by {song.artist}
                         <button 
                             onClick={() => deleteSong(song.title, song.artist)}
-                        >❌️</button>
+                        >❌️</button><br />
+                         {song.url}
                     </li>
                 ))}
             </ul>
