@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useSong } from "../context/SongContext";
 
 function CategoryBlock({title, songs}) {
     return(

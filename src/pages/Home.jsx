@@ -12,7 +12,7 @@ function Home() {
 
     return(
         <>
-        <h1>ホームページﾃﾞｽ</h1>
+        <h1>カラオケの曲記録アプリ</h1>
         <p>ようこそ{username}さん！</p>
         <button onClick={() => navigate('/add')}>曲の登録画面へ</button>
         <button onClick={() => navigate('/list')}>曲一覧へ</button>
