@@ -32,9 +32,18 @@ export function Songprovider({children}) {
         );
     };
 
+    const updateSongPriority = (title, artist, newPriority) => {
+        setSongs(prevSongs => 
+            prevSongs.map(song =>
+                song.title === title && song.artist === artist ?
+                {...song, priority: Number(newPriority)}
+                : song
+            )
+        );
+    }
 
     return(
-        <SongContext.Provider value={{ songs, addSong, isDuplicateSong, deleteSong}}>
+        <SongContext.Provider value={{ songs, addSong, isDuplicateSong, deleteSong, updateSongPriority}}>
             {children}
         </SongContext.Provider>
     )
