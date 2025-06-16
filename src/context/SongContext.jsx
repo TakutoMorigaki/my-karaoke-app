@@ -42,11 +42,22 @@ export function Songprovider({children}) {
         );
     }
 
+    const updateSongUrl = (title, artist, newUrl) => {
+        setSongs(prevSongs => 
+            prevSongs.map(song => 
+                song.title === title && song.artist === artist
+                ? {...song, url: newUrl}
+                : song
+            )
+        );
+    };
+
+
     return(
-        <SongContext.Provider value={{ songs, addSong, isDuplicateSong, deleteSong, updateSongPriority}}>
+        <SongContext.Provider value={{ songs, addSong, isDuplicateSong, deleteSong, updateSongPriority ,updateSongUrl}}>
             {children}
         </SongContext.Provider>
-    )
+    );
 }
 
 export function useSong() {

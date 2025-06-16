@@ -23,7 +23,7 @@ function Add() {
 
         if(isDuplicateSong(inputtitle, inputartist)){
             alert('同じ曲は追加できません');
-            alert('優先度の変更、カテゴリの変更は曲一覧ページからお願いします');
+            alert('優先度の変更、カテゴリの変更は曲詳細ページからお願いします');
             return;
         }
         
