@@ -18,7 +18,8 @@ export function Songprovider({children}) {
         artist: songartist.trim(),
         category: songcategory,
         priority: Number(songpriority),
-        url: songurl.trim()
+        url: songurl.trim(),
+        memo: ""
         };
 
         setSongs(prevSongs => [...prevSongs, newSong]);
@@ -52,9 +53,21 @@ export function Songprovider({children}) {
         );
     };
 
+    const updateSongMemo = (title, artist, newMemo) => {
+        setSongs(prevSongs => 
+            prevSongs.map(song => 
+                song.title === title && song.artist === artist
+                ? {...song, memo: newMemo}
+                : song
+            )
+        )
+    }
+
 
     return(
-        <SongContext.Provider value={{ songs, addSong, isDuplicateSong, deleteSong, updateSongPriority ,updateSongUrl}}>
+        <SongContext.Provider 
+            value={{ songs, addSong, isDuplicateSong, deleteSong,
+                     updateSongPriority, updateSongUrl, updateSongMemo }}>
             {children}
         </SongContext.Provider>
     );

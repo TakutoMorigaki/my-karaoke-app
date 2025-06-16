@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function SongDetail() {
     const {title, artist} = useParams();
-    const {songs, deleteSong, updateSongPriority, updateSongUrl} = useSong();
+    const {songs, deleteSong, updateSongPriority, updateSongUrl, updateSongMemo} = useSong();
     const navigate = useNavigate();
     
     const song = songs.find(
@@ -13,6 +13,7 @@ function SongDetail() {
     
     const [newPriority, setNewPriority] = useState(song?.priority || '');
     const [newUrl, setNewUrl] = useState(song.url || '');
+    const [newMemo, setMemo] = useState(song.memo || '');
 
     if(!song) {
         return <p>曲が見つかりませんでした。</p>
@@ -39,6 +40,11 @@ function SongDetail() {
     const handleUrlUpdate = () => {
         updateSongUrl(song.title, song.artist, newUrl);
         alert('歌詞URLを更新しました');
+    }
+
+    const handleMemoUpdate = () => {
+        updateSongMemo(song.title, song.artist, newMemo);
+        alert('備考を保存しました');
     }
 
     return (
@@ -73,7 +79,17 @@ function SongDetail() {
                     onChange={(e) => setNewUrl(e.target.value)}
                 />
                 <button onClick={handleUrlUpdate}>更新</button>
-            </div>
+            </div><br />
+            <div>
+                <label>備考：</label>
+                <textarea
+                    rows="4"
+                    cols="40"
+                    value={newMemo}
+                    onChange={(e) => setMemo(e.target.value)}
+                />
+                <button onClick={handleMemoUpdate}>備考を保存</button>
+            </div><br />
             <button onClick={handleDelete}>曲の削除</button>
         </div>
     );
