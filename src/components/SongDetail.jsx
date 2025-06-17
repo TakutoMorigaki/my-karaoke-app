@@ -49,7 +49,10 @@ function SongDetail() {
 
     return (
         <div>
-            <Link to='/list'>曲一覧に戻る</Link>
+            <div>
+                <Link to='/home'>ホームページに戻る</Link> |{" "}
+                <Link to='/list'>曲一覧に戻る</Link>
+            </div>
             <h1>曲の詳細ページ</h1>
             <p>タイトル：{song.title}</p>
             <p>アーティスト：{song.artist}</p>
@@ -63,6 +66,7 @@ function SongDetail() {
                 <label>優先度の変更：</label>
                 <input
                     type='number'
+                    placeholder="優先度(1が最高、数が大きほど低)"
                     value={newPriority}
                     min='1'
                     onChange={(e) => setNewPriority(e.target.value)}
