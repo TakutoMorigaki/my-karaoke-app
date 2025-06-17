@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function CategoryBlock({title, songs}) {
     return(
         <>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         {songs.length === 0 ? (
             <p>曲が未登録です</p>
         ) : (
