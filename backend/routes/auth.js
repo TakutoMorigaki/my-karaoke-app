@@ -42,12 +42,12 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ username });
         if(!user){
-            res.status(401).json({message: 'ユーザーが見つかりません'});
+            return res.status(401).json({message: 'ユーザーが見つかりません'});
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch) {
-            res.status(401).json({message: 'パスワードが違います'});
+            return res.status(401).json({message: 'パスワードが違います'});
         }
 
         res.status(200).json({message: 'ログイン成功しました', username: user.username});
