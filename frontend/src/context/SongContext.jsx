@@ -1,9 +1,29 @@
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
+import { useAuth } from '../context/AuthContext'
 
 const SongContext = createContext(null);
 
 export function Songprovider({children}) {
     const [songs, setSongs] = useState([]);
+    const { username, isAuthenticated } = useAuth();
+
+    useEffect(() => {
+        const fetchSongs = async () => {
+            if(!isAuthenticated || !username) 
+                return;
+        
+        try {
+            const res = await fetch(`http://localhost:5000/api/songs/${username}`);
+            const data = await res.json();
+            console.log(data);
+            setSongs(data);
+        } catch (error) {
+            console.error("曲の取得に失敗しました", error);
+        }
+    };
+
+    fetchSongs();
+    }, [username, isAuthenticated]);
 
     const isDuplicateSong = (title, artist) => {
         return songs.find(song =>
@@ -66,7 +86,7 @@ export function Songprovider({children}) {
 
     return(
         <SongContext.Provider 
-            value={{ songs, addSong, isDuplicateSong, deleteSong,
+            value={{ songs, useEffect, addSong, isDuplicateSong, deleteSong,
                      updateSongPriority, updateSongUrl, updateSongMemo }}>
             {children}
         </SongContext.Provider>

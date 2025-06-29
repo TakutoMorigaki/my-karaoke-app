@@ -30,3 +30,15 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
+
+router.get('/:username', async (req, res) => {
+    const { username } = req.params;
+
+    try {
+        const songs = await Song.find({ username });
+        res.status(200).json(songs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'サーバーエラーが発生しました'});
+    }
+});
