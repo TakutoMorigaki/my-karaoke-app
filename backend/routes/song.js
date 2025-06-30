@@ -42,3 +42,18 @@ router.get('/:username', async (req, res) => {
         res.status(500).json({ message: 'サーバーエラーが発生しました'});
     }
 });
+
+router.delete('/:username/:title/:artist', async (req, res) => {
+    const { username, title, artist } = req.params;
+
+    try {
+        const deleted = await Song.findOneAndDelete({ username, title, artist });
+        if(!deleted) {
+            return res.status(404).json({ message: '曲が見つかりません'});
+        }
+        res.json({ message: '曲を削除しました'});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: '削除中にエラーが発生しました'});
+    }
+});

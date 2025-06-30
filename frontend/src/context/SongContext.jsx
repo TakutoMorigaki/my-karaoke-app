@@ -38,8 +38,8 @@ export function Songprovider({children}) {
         artist: songartist.trim(),
         category: songcategory,
         priority: Number(songpriority),
-        url: songurl.trim(),
-        memo: ""
+        url: songurl?.trim() || '',
+        memo: "",
         };
 
         try{
@@ -65,11 +65,26 @@ export function Songprovider({children}) {
     };
 
     const deleteSong = async (title, artist) => {
-        setSongs(prevSongs =>
-            prevSongs.filter(song =>
-                !(song.title === title && song.artist === artist)
-            )
-        );
+        try {
+            const res = await fetch(`http://localhost:5000/api/songs/${username}/${encodeURIComponent(title)}/${encodeURIComponent(artist)}`, {
+                method: 'DELETE',
+            });
+
+            if(!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || '削除に失敗しました');
+            }
+
+            setSongs(prevSongs =>
+                prevSongs.filter(song =>
+                    !(song.title === title && song.artist === artist)
+                )
+            );
+        } catch (err) {
+            console.error("曲の削除エラー", err);
+            alert("曲の削除に失敗しました");
+        }
+            
     };
 
     const updateSongPriority = (title, artist, newPriority) => {
