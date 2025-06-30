@@ -15,7 +15,6 @@ export function Songprovider({children}) {
         try {
             const res = await fetch(`http://localhost:5000/api/songs/${username}`);
             const data = await res.json();
-            console.log(data);
             setSongs(data);
         } catch (error) {
             console.error("曲の取得に失敗しました", error);
@@ -31,9 +30,10 @@ export function Songprovider({children}) {
         ) !== undefined;
     }
     
-    const addSong = (songtitle, songartist, songcategory, songpriority, songurl) => {
+    const addSong = async (songtitle, songartist, songcategory, songpriority, songurl) => {
         
         const newSong = {
+        username,
         title: songtitle.trim(),
         artist: songartist.trim(),
         category: songcategory,
@@ -42,10 +42,29 @@ export function Songprovider({children}) {
         memo: ""
         };
 
-        setSongs(prevSongs => [...prevSongs, newSong]);
+        try{
+            const res = await fetch("http://localhost:5000/api/songs", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newSong)
+            });
+
+            if(!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || "登録に失敗しました");
+            }
+
+            const data = await res.json();
+            setSongs(prev => [...prev, data.song]);
+        } catch (err) {
+            console.error("曲の登録エラー", err);
+            alert("曲の登録に失敗しました");
+        }
     };
 
-    const deleteSong = (title, artist) => {
+    const deleteSong = async (title, artist) => {
         setSongs(prevSongs =>
             prevSongs.filter(song =>
                 !(song.title === title && song.artist === artist)
@@ -86,7 +105,7 @@ export function Songprovider({children}) {
 
     return(
         <SongContext.Provider 
-            value={{ songs, useEffect, addSong, isDuplicateSong, deleteSong,
+            value={{ songs, addSong, isDuplicateSong, deleteSong,
                      updateSongPriority, updateSongUrl, updateSongMemo }}>
             {children}
         </SongContext.Provider>
