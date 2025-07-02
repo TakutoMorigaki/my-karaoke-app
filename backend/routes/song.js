@@ -57,3 +57,30 @@ router.delete('/:username/:title/:artist', async (req, res) => {
         res.status(500).json({ message: '削除中にエラーが発生しました'});
     }
 });
+
+router.put('/:username/:title/:artist', async (req, res) => {
+    const { username, title, artist } = req.params;
+    const { category, priority, url, memo } = req.body;
+    
+    try {
+        const updateSong = await Song.findOneAndUpdate(
+            { username, title, artist },
+            { 
+                category: category || "", 
+                priority: priority !== undefined ? priority : 0, 
+                url: url || "", 
+                memo
+            },
+            { new: true}
+        );
+
+        if(!updateSong) {
+            return res.status(404).json({ message: "曲が見つかりませんでした"});
+        }
+
+        res.status(200).json({ message: "更新成功", song: updateSong});
+    } catch (err){
+        console.error("更新エラー", err);
+        res.status(500).json({message: "サーバーエラーが発生しました"});
+    }
+});
