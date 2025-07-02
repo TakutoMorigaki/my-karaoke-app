@@ -33,7 +33,7 @@ function EditSong() {
             url,
             memo
         });
-        navigate("/list");
+        navigate(`/song/${title}/${artist}`);
     };
 
     return(

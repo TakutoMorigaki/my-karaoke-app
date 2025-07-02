@@ -63,18 +63,11 @@ function SongDetail() {
                 </p>
             )}
             <div>
-                <label>優先度の変更：</label>
-                <input
-                    type='number'
-                    placeholder="優先度(1が最高、数が大きほど低)"
-                    value={newPriority}
-                    min='1'
-                    onChange={(e) => setNewPriority(e.target.value)}
-                /> 
-                <button onClick={handlePriorityUpdate}>更新</button>
+                <label>優先度：{song.priority}</label>
             </div>
             <br />
-            <div>
+            
+            {/* <div>
                 <label>URLの変更：</label>
                 <input
                     type="url"
@@ -83,18 +76,17 @@ function SongDetail() {
                     onChange={(e) => setNewUrl(e.target.value)}
                 />
                 <button onClick={handleUrlUpdate}>更新</button>
-            </div><br />
+            </div><br /> */}
+
             <div>
-                <label>備考：</label>
-                <textarea
-                    rows="4"
-                    cols="40"
-                    value={newMemo}
-                    onChange={(e) => setMemo(e.target.value)}
-                />
-                <button onClick={handleMemoUpdate}>備考を保存</button>
-            </div><br />
+                <label>備考</label>
+                <p>{song.memo}</p>
+            </div>
+            
             <button onClick={handleDelete}>曲の削除</button>
+            <br />
+            <br />
+
             <div>
                 <Link to={`/edit/${encodeURIComponent(song.title)}/${encodeURIComponent(song.artist)}`}>
                     編集
