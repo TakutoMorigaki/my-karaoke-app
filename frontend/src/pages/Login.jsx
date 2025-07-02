@@ -6,10 +6,9 @@ function Login() {
     const [inputname, setInputname] = useState('');
     const [inputpass, setInputpass] = useState('');
     const {login} = useAuth();
-    const {isAuthenticated} = useAuth();
     const navigate = useNavigate();
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if(inputname.trim() === ''){
             alert("ユーザー名を入力してください");
             return;
@@ -18,9 +17,13 @@ function Login() {
             alert("パスワードを入力してください");
             return;
         }
-        login(inputname, inputpass);
-        console.log(isAuthenticated);
-        navigate('/home');
+
+        await login(inputname, inputpass);
+
+        const isLogin = localStorage.getItem("isAuthenticated") === "true";
+        if(isLogin){
+            navigate("/home");
+        }
     }
 
     return(
