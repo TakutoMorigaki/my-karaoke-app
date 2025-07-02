@@ -117,11 +117,41 @@ export function Songprovider({children}) {
         )
     }
 
+    const updateSong = async (title, artist, updateFields) => {
+        try {
+            const res = await fetch(`http://localhost:5000/api/songs/${username}/${encodeURIComponent(title)}/${encodeURIComponent(artist)}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateFields)
+            });
+
+            if(!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || "更新に失敗しました");
+            }
+
+            const data = await res.json();
+
+            setSongs(prevSongs =>
+                prevSongs.map(song =>
+                    song.title === title && song.artist === artist
+                    ? data.song
+                    : song
+                )
+            )
+        } catch (err) {
+            console.error("曲情報の更新エラー", err);
+            alert("曲情報の更新に失敗しました");
+        }
+    }
 
     return(
         <SongContext.Provider 
-            value={{ songs, addSong, isDuplicateSong, deleteSong,
-                     updateSongPriority, updateSongUrl, updateSongMemo }}>
+            value={{ songs, addSong, isDuplicateSong, deleteSong, updateSong
+                     , updateSongPriority, updateSongUrl, updateSongMemo
+                     }}>
             {children}
         </SongContext.Provider>
     );

@@ -95,6 +95,11 @@ function SongDetail() {
                 <button onClick={handleMemoUpdate}>備考を保存</button>
             </div><br />
             <button onClick={handleDelete}>曲の削除</button>
+            <div>
+                <Link to={`/edit/${encodeURIComponent(song.title)}/${encodeURIComponent(song.artist)}`}>
+                    編集
+                </Link>
+            </div>
         </div>
     );
 }
