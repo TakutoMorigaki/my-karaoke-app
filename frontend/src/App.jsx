@@ -18,10 +18,8 @@ function App() {
             <Route path='/home' element={<Home />} />
             <Route path='/add' element={<Add />} />
             <Route path='/list' element={<List />} />
-            <Route path="/edit/:title/:artist" element={<EditSong />} />
-          </Route>
-          <Route path='/song/:title/:artist' element={<ProtectedRoute />}>
-            <Route index element={<SongDetail />} />
+            <Route path='/song/:title/:artist' element={<SongDetail />} />
+            <Route path='/edit/:title/:artist' element={<EditSong />} />
           </Route>
           <Route path='*' element={<NotFound />} />
         </Routes>
