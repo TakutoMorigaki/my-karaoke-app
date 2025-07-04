@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Add from './pages/Add';
@@ -14,6 +15,7 @@ function App() {
     <>
         <Routes>
           <Route path='/' element={<Login />} />
+          <Route path='/register' element={<Register />} />
           <Route element={<ProtectedRoute />}>
             <Route path='/home' element={<Home />} />
             <Route path='/add' element={<Add />} />

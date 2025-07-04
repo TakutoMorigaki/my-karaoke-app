@@ -55,8 +55,38 @@ export function Authprovider({children}) {
         localStorage.removeItem("username");
     }
 
+    const register = async (username, password) => {
+        try{
+            const res = await fetch(`http://localhost:5000/api/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            });
+
+            if(!res.ok){
+                const ErrorData = await res.json();
+                throw new Error(ErrorData.message || "ユーザー登録に失敗しました");
+            }
+
+            const data = await res.json();
+
+            alert("ユーザー登録に成功しました");
+            setIsAuthenticated(true);
+            setUsername(data.username);
+            localStorage.setItem("isAuthenticated", "true");
+            localStorage.setItem("username", data.username);
+        } catch (err) {
+            alert(err.message);
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, username, isLoading, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, username, isLoading, login, logout, register }}>
             {children}
         </AuthContext.Provider>
     );
