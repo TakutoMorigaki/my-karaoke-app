@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
         });
         await newUser.save();
 
-        res.status(201).json({ message: 'ユーザー登録に成功しました'});
+        res.status(201).json({ message: 'ユーザー登録に成功しました', username: newUser.username });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'サーバーエラーが発生しました'});

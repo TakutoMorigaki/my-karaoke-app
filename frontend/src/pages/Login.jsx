@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Login() {
@@ -29,12 +29,14 @@ function Login() {
     return(
         <>
         <h2>ログインフォーム</h2>
+
         <input 
             type="text"
             placeholder="ユーザー名"
             value={inputname}
             onChange={(e) => setInputname(e.target.value)}
         /><br />
+
         <input
             type="password"
             placeholder="パスワード"
@@ -42,6 +44,9 @@ function Login() {
             onChange={(e) => setInputpass(e.target.value)}
         /><br />
         <button onClick={handleLogin} className="loginbtn">ログイン</button>
+        <br />
+
+        <Link to='/register'>新規登録はこちら</Link>
         </>
     )
 }
