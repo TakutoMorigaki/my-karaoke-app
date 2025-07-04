@@ -1,19 +1,14 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useSong } from "../context/SongContext";
-import { useState } from "react";
 
 function SongDetail() {
     const {title, artist} = useParams();
-    const {songs, deleteSong, updateSongPriority, updateSongUrl, updateSongMemo} = useSong();
+    const {songs, deleteSong } = useSong();
     const navigate = useNavigate();
     
     const song = songs.find(
         (s) => s.title === title && s.artist === artist
     );
-    
-    const [newPriority, setNewPriority] = useState(song?.priority || '');
-    const [newUrl, setNewUrl] = useState(song.url || '');
-    const [newMemo, setMemo] = useState(song.memo || '');
 
     if(!song) {
         return <p>曲が見つかりませんでした。</p>
@@ -26,25 +21,6 @@ function SongDetail() {
             alert('削除されました');
             navigate('/list');
         }
-    }
-
-    const handlePriorityUpdate = () => {
-        if(newPriority === ''){
-            alert('優先度を入力してください');
-            return;
-        }
-        updateSongPriority(song.title, song.artist, newPriority);
-        alert('優先度を更新しました');
-    };
-
-    const handleUrlUpdate = () => {
-        updateSongUrl(song.title, song.artist, newUrl);
-        alert('歌詞URLを更新しました');
-    }
-
-    const handleMemoUpdate = () => {
-        updateSongMemo(song.title, song.artist, newMemo);
-        alert('備考を保存しました');
     }
 
     return (
@@ -67,17 +43,6 @@ function SongDetail() {
             </div>
             <br />
             
-            {/* <div>
-                <label>URLの変更：</label>
-                <input
-                    type="url"
-                    placeholder="新しい歌詞のURL"
-                    value={newUrl}
-                    onChange={(e) => setNewUrl(e.target.value)}
-                />
-                <button onClick={handleUrlUpdate}>更新</button>
-            </div><br /> */}
-
             <div>
                 <label>備考</label>
                 <p>{song.memo}</p>

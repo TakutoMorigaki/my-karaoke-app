@@ -87,36 +87,6 @@ export function Songprovider({children}) {
             
     };
 
-    const updateSongPriority = (title, artist, newPriority) => {
-        setSongs(prevSongs => 
-            prevSongs.map(song =>
-                song.title === title && song.artist === artist ?
-                {...song, priority: Number(newPriority)}
-                : song
-            )
-        );
-    }
-
-    const updateSongUrl = (title, artist, newUrl) => {
-        setSongs(prevSongs => 
-            prevSongs.map(song => 
-                song.title === title && song.artist === artist
-                ? {...song, url: newUrl}
-                : song
-            )
-        );
-    };
-
-    const updateSongMemo = (title, artist, newMemo) => {
-        setSongs(prevSongs => 
-            prevSongs.map(song => 
-                song.title === title && song.artist === artist
-                ? {...song, memo: newMemo}
-                : song
-            )
-        )
-    }
-
     const updateSong = async (title, artist, updateFields) => {
         try {
             const res = await fetch(`http://localhost:5000/api/songs/${username}/${encodeURIComponent(title)}/${encodeURIComponent(artist)}`, {
@@ -148,10 +118,7 @@ export function Songprovider({children}) {
     }
 
     return(
-        <SongContext.Provider 
-            value={{ songs, addSong, isDuplicateSong, deleteSong, updateSong
-                     , updateSongPriority, updateSongUrl, updateSongMemo
-                     }}>
+        <SongContext.Provider value={{ songs, addSong, isDuplicateSong, deleteSong, updateSong}}>
             {children}
         </SongContext.Provider>
     );
